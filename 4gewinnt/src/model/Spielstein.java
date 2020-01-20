@@ -7,11 +7,7 @@ public class Spielstein {
 	private Color farbe;
 
 	public Spielstein(Color farbe) {
-
-	}
-
-	public Spielstein() {
-
+		this.farbe = farbe;
 	}
 
 	public Color getFarbe() {

@@ -8,19 +8,14 @@ public class Spieler {
 	 * Hier stehen die Variablen fuer die Klasse Spieler
 	 */
 	private String name;
-	public Color farbe;
-	Spielstein spielstein = new Spielstein(Color.blue);
-
-	/* Konstruktor ohne Werte fuer Variablen */
-	public Spieler() {
-
-	}
+	private Color farbe;
 
 	/*
 	 * Konstruktor mit Wert fuer die Variable "name"
 	 */
-	public Spieler(String name) {
+	public Spieler(String name, Color farbe) {
 		this.name = name;
+		this.farbe = farbe;
 	}
 
 	/*
@@ -30,11 +25,7 @@ public class Spieler {
 		return name;
 	}
 
-	/*
-	 * Setter
-	 */
-	public void setName(String name) {
-		this.name = name;
+	public Color getFarbe() {
+		return farbe;
 	}
-
 }
