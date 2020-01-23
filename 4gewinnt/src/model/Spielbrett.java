@@ -48,10 +48,12 @@ public class Spielbrett {
 
 	}
 
-	public void setzeSpielsteinAnErsteFreieStelle(int spalte, java.awt.Color farbe) {
+	public boolean setzeSpielsteinAnErsteFreieStelle(int spalte, java.awt.Color farbe) {
 		int zeile = ermittleErsteFreieStelle(spalte);
 
 		setSpielstein(zeile, spalte, farbe);
+		return gewinnBedingungVierNebeneinander(zeile, spalte, farbe);
+
 	}
 
 	public Spielstein[][] getSpielbrett() {
@@ -71,7 +73,7 @@ public class Spielbrett {
 
 				Spielstein spielstein = spielbrett[aktuelleSpalte][aktuelleZeile];
 				if (spielstein == null)
-					steinfarbe = null;
+					return anzahl;
 				else
 					steinfarbe = spielstein.getFarbe();
 				if (farbe.equals(steinfarbe)) {
@@ -79,9 +81,9 @@ public class Spielbrett {
 					istGleicheFarbe = true;
 
 				} else
-					istGleicheFarbe = false;
+					return anzahl;
 			} else
-				;
+				return anzahl;
 
 		} while (istGleicheFarbe);
 		return anzahl;
@@ -111,12 +113,11 @@ public class Spielbrett {
 
 	public boolean senkrechtGewonnen(Color farbe, int aktuelleZeile, int aktuelleSpalte) {
 		int anzahlGleicherFarbe = 1;
-		anzahlGleicherFarbe += getAnzahlSelberFarbeRelativZuPosition(farbe, aktuelleZeile, aktuelleSpalte, 0, 1);
 		anzahlGleicherFarbe += getAnzahlSelberFarbeRelativZuPosition(farbe, aktuelleZeile, aktuelleSpalte, 0, -1);
 		return anzahlGleicherFarbe >= 4;
 	}
 
-	public boolean gewinnbedingungVierNebeneinander(Color farbe, int aktuelleZeile, int aktuelleSpalte) {
+	public boolean gewinnBedingungVierNebeneinander(int aktuelleSpalte, int aktuelleZeile, Color farbe) {
 		if (waagerechtGewonnen(farbe, aktuelleZeile, aktuelleSpalte))
 			return true;
 		if (senkrechtGewonnen(farbe, aktuelleZeile, aktuelleSpalte))
