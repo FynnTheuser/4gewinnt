@@ -10,8 +10,8 @@ public class Spiel {
 
 	public HashMap<String, String> colors = new HashMap<String, String>() {
 		{
-			put(Color.GREEN.toString(), "Grün");
-			put(Color.BLUE.toString(), "Blau");
+			put(Color.GREEN.toString(), "X");
+			put(Color.BLUE.toString(), "O");
 		}
 	};
 
@@ -33,15 +33,18 @@ public class Spiel {
 		String line;
 		Spieler currentSpieler = spieler1;
 
-		while (!(line = scanner.nextLine()).equals("quit")) {
+		while (!(line = scanner.nextLine()).equals("0")) {
 			try {
 				int eingabe = Integer.parseInt(line);
-
 				boolean gewonnen = spielbrett.setzeSpielsteinAnErsteFreieStelle(eingabe - 1, currentSpieler.getFarbe());
-				// while (eingabe <= 0 || eingabe - 1 >= 8)
-				// System.out.println("Bitte eine Zahl zwischen 1 und 7 wählen!");
+
+				if (eingabe <= 0 || Integer.parseInt(line) >= 8) {
+
+					System.out.println("Bitte wählen Sie eine Zahl zwischen 1 und 7!");
+				}
 				if (gewonnen == true) {
 					System.out.println("Herzlichen Glückwunsch " + currentSpieler.getName() + " hat gewonnen!");
+					System.out.println("0 drücken um neu zu beginnen!");
 					break;
 				}
 				if (currentSpieler == spieler1)
@@ -53,22 +56,24 @@ public class Spiel {
 
 			} catch (NumberFormatException e) {
 				System.out.println("Fehlerhafte Eingabe, bitte erneut probieren.");
+
 			}
 
 		}
 	}
 
 	public void printSpielfeld(Spielstein[][] spielbrett) {
+		int spaltenNummer = 1;
 		for (Spielstein[] x : spielbrett) {
 			for (Spielstein spielstein : x) {
 
 				if (spielstein == null)
-					System.out.print("----");
+					System.out.print("-");
 				else
 					System.out.print(colors.get(spielstein.getFarbe().toString()));
 				System.out.print("|");
 			}
-			System.out.print("<--\n");
+			System.out.print(" " + spaltenNummer++ + "\n");
 
 		}
 	}
